@@ -28,11 +28,11 @@ enum _DropdownType { singleSelect, multipleSelect }
 
 enum _SearchType { onListData, onRequestData }
 
+enum DropdownPlacement { top, bottom, auto }
+
 const _defaultErrorColor = Colors.red;
 
-const _defaultBorderRadius = BorderRadius.all(
-  Radius.circular(12),
-);
+const _defaultBorderRadius = BorderRadius.all(Radius.circular(12));
 
 final Border _defaultErrorBorder = Border.all(
   color: _defaultErrorColor,
@@ -152,6 +152,9 @@ class CustomDropdown<T> extends StatefulWidget {
   /// If disabled, you can not open the dropdown.
   final bool enabled;
 
+  /// controls whether [CustomDropdown] dropdown is placed at the bottom or at the top
+  final DropdownPlacement dropdownPlacement;
+
   /// [CustomDropdown] disabled decoration.
   ///
   /// Note: Only applicable if dropdown is disabled.
@@ -190,6 +193,7 @@ class CustomDropdown<T> extends StatefulWidget {
     this.hintText,
     this.decoration,
     this.validator,
+    this.dropdownPlacement = DropdownPlacement.auto,
     this.validateOnChange = true,
     this.visibility,
     this.overlayController,
@@ -207,34 +211,34 @@ class CustomDropdown<T> extends StatefulWidget {
     this.excludeSelected = true,
     this.enabled = true,
     this.disabledDecoration,
-  })  : assert(
-          initialItem == null || controller == null,
-          'Only one of initialItem or controller can be specified at a time',
-        ),
-        assert(
-          initialItem == null || items!.contains(initialItem),
-          'Initial item must match with one of the item in items list.',
-        ),
-        assert(
-          controller == null ||
-              controller.value == null ||
-              items!.contains(controller.value),
-          'Controller value must match with one of the item in items list.',
-        ),
-        _searchType = null,
-        _dropdownType = _DropdownType.singleSelect,
-        futureRequest = null,
-        futureRequestDelay = null,
-        noResultFoundBuilder = null,
-        noResultFoundText = null,
-        searchHintText = null,
-        initialItems = null,
-        onListChanged = null,
-        listValidator = null,
-        headerListBuilder = null,
-        searchRequestLoadingIndicator = null,
-        closeDropDownOnClearFilterSearch = false,
-        multiSelectController = null;
+  }) : assert(
+         initialItem == null || controller == null,
+         'Only one of initialItem or controller can be specified at a time',
+       ),
+       assert(
+         initialItem == null || items!.contains(initialItem),
+         'Initial item must match with one of the item in items list.',
+       ),
+       assert(
+         controller == null ||
+             controller.value == null ||
+             items!.contains(controller.value),
+         'Controller value must match with one of the item in items list.',
+       ),
+       _searchType = null,
+       _dropdownType = _DropdownType.singleSelect,
+       futureRequest = null,
+       futureRequestDelay = null,
+       noResultFoundBuilder = null,
+       noResultFoundText = null,
+       searchHintText = null,
+       initialItems = null,
+       onListChanged = null,
+       listValidator = null,
+       headerListBuilder = null,
+       searchRequestLoadingIndicator = null,
+       closeDropDownOnClearFilterSearch = false,
+       multiSelectController = null;
 
   CustomDropdown.search({
     super.key,
@@ -254,6 +258,7 @@ class CustomDropdown<T> extends StatefulWidget {
     this.hintBuilder,
     this.noResultFoundBuilder,
     this.validator,
+    this.dropdownPlacement = DropdownPlacement.auto,
     this.validateOnChange = true,
     this.maxlines = 1,
     this.overlayHeight,
@@ -267,30 +272,30 @@ class CustomDropdown<T> extends StatefulWidget {
     this.enabled = true,
     this.disabledDecoration,
     this.closeDropDownOnClearFilterSearch = false,
-  })  : assert(
-          initialItem == null || controller == null,
-          'Only one of initialItem or controller can be specified at a time',
-        ),
-        assert(
-          initialItem == null || items!.contains(initialItem),
-          'Initial item must match with one of the item in items list.',
-        ),
-        assert(
-          controller == null ||
-              controller.value == null ||
-              items!.contains(controller.value),
-          'Controller value must match with one of the item in items list.',
-        ),
-        _searchType = _SearchType.onListData,
-        _dropdownType = _DropdownType.singleSelect,
-        futureRequest = null,
-        futureRequestDelay = null,
-        initialItems = null,
-        onListChanged = null,
-        listValidator = null,
-        headerListBuilder = null,
-        searchRequestLoadingIndicator = null,
-        multiSelectController = null;
+  }) : assert(
+         initialItem == null || controller == null,
+         'Only one of initialItem or controller can be specified at a time',
+       ),
+       assert(
+         initialItem == null || items!.contains(initialItem),
+         'Initial item must match with one of the item in items list.',
+       ),
+       assert(
+         controller == null ||
+             controller.value == null ||
+             items!.contains(controller.value),
+         'Controller value must match with one of the item in items list.',
+       ),
+       _searchType = _SearchType.onListData,
+       _dropdownType = _DropdownType.singleSelect,
+       futureRequest = null,
+       futureRequestDelay = null,
+       initialItems = null,
+       onListChanged = null,
+       listValidator = null,
+       headerListBuilder = null,
+       searchRequestLoadingIndicator = null,
+       multiSelectController = null;
 
   const CustomDropdown.searchRequest({
     super.key,
@@ -312,6 +317,7 @@ class CustomDropdown<T> extends StatefulWidget {
     this.hintBuilder,
     this.noResultFoundBuilder,
     this.validator,
+    this.dropdownPlacement = DropdownPlacement.auto,
     this.validateOnChange = true,
     this.maxlines = 1,
     this.overlayHeight,
@@ -326,17 +332,17 @@ class CustomDropdown<T> extends StatefulWidget {
     this.enabled = true,
     this.disabledDecoration,
     this.closeDropDownOnClearFilterSearch = false,
-  })  : assert(
-          initialItem == null || controller == null,
-          'Only one of initialItem or controller can be specified at a time',
-        ),
-        _searchType = _SearchType.onRequestData,
-        _dropdownType = _DropdownType.singleSelect,
-        initialItems = null,
-        onListChanged = null,
-        listValidator = null,
-        headerListBuilder = null,
-        multiSelectController = null;
+  }) : assert(
+         initialItem == null || controller == null,
+         'Only one of initialItem or controller can be specified at a time',
+       ),
+       _searchType = _SearchType.onRequestData,
+       _dropdownType = _DropdownType.singleSelect,
+       initialItems = null,
+       onListChanged = null,
+       listValidator = null,
+       headerListBuilder = null,
+       multiSelectController = null;
 
   CustomDropdown.multiSelect({
     super.key,
@@ -345,6 +351,7 @@ class CustomDropdown<T> extends StatefulWidget {
     this.multiSelectController,
     this.controller,
     this.initialItems,
+    this.dropdownPlacement = DropdownPlacement.auto,
     this.overlayController,
     this.itemsScrollController,
     this.listValidator,
@@ -365,36 +372,36 @@ class CustomDropdown<T> extends StatefulWidget {
     this.listItemPadding,
     this.enabled = true,
     this.disabledDecoration,
-  })  : assert(
-          initialItems == null || multiSelectController == null,
-          'Only one of initialItems or controller can be specified at a time',
-        ),
-        assert(
-          initialItems == null ||
-              initialItems.isEmpty ||
-              initialItems.any((e) => items!.contains(e)),
-          'Initial items must match with the items in the items list.',
-        ),
-        assert(
-          multiSelectController == null ||
-              multiSelectController.value.isEmpty ||
-              multiSelectController.value.any((e) => items!.contains(e)),
-          'Controller value must match with one of the item in items list.',
-        ),
-        _searchType = null,
-        _dropdownType = _DropdownType.multipleSelect,
-        initialItem = null,
-        noResultFoundText = null,
-        validator = null,
-        headerBuilder = null,
-        onChanged = null,
-        excludeSelected = false,
-        futureRequest = null,
-        futureRequestDelay = null,
-        noResultFoundBuilder = null,
-        searchHintText = null,
-        searchRequestLoadingIndicator = null,
-        closeDropDownOnClearFilterSearch = false;
+  }) : assert(
+         initialItems == null || multiSelectController == null,
+         'Only one of initialItems or controller can be specified at a time',
+       ),
+       assert(
+         initialItems == null ||
+             initialItems.isEmpty ||
+             initialItems.any((e) => items!.contains(e)),
+         'Initial items must match with the items in the items list.',
+       ),
+       assert(
+         multiSelectController == null ||
+             multiSelectController.value.isEmpty ||
+             multiSelectController.value.any((e) => items!.contains(e)),
+         'Controller value must match with one of the item in items list.',
+       ),
+       _searchType = null,
+       _dropdownType = _DropdownType.multipleSelect,
+       initialItem = null,
+       noResultFoundText = null,
+       validator = null,
+       headerBuilder = null,
+       onChanged = null,
+       excludeSelected = false,
+       futureRequest = null,
+       futureRequestDelay = null,
+       noResultFoundBuilder = null,
+       searchHintText = null,
+       searchRequestLoadingIndicator = null,
+       closeDropDownOnClearFilterSearch = false;
 
   CustomDropdown.multiSelectSearch({
     super.key,
@@ -410,6 +417,7 @@ class CustomDropdown<T> extends StatefulWidget {
     this.listItemBuilder,
     this.hintBuilder,
     this.decoration,
+    this.dropdownPlacement = DropdownPlacement.auto,
     this.headerListBuilder,
     this.noResultFoundText,
     this.noResultFoundBuilder,
@@ -427,32 +435,32 @@ class CustomDropdown<T> extends StatefulWidget {
     this.enabled = true,
     this.disabledDecoration,
     this.closeDropDownOnClearFilterSearch = false,
-  })  : assert(
-          initialItems == null || multiSelectController == null,
-          'Only one of initialItems or controller can be specified at a time',
-        ),
-        assert(
-          initialItems == null ||
-              initialItems.isEmpty ||
-              initialItems.any((e) => items!.contains(e)),
-          'Initial items must match with the items in the items list.',
-        ),
-        assert(
-          multiSelectController == null ||
-              multiSelectController.value.isEmpty ||
-              multiSelectController.value.any((e) => items!.contains(e)),
-          'Controller value must match with one of the item in items list.',
-        ),
-        _searchType = _SearchType.onListData,
-        _dropdownType = _DropdownType.multipleSelect,
-        initialItem = null,
-        onChanged = null,
-        validator = null,
-        excludeSelected = false,
-        headerBuilder = null,
-        futureRequest = null,
-        futureRequestDelay = null,
-        searchRequestLoadingIndicator = null;
+  }) : assert(
+         initialItems == null || multiSelectController == null,
+         'Only one of initialItems or controller can be specified at a time',
+       ),
+       assert(
+         initialItems == null ||
+             initialItems.isEmpty ||
+             initialItems.any((e) => items!.contains(e)),
+         'Initial items must match with the items in the items list.',
+       ),
+       assert(
+         multiSelectController == null ||
+             multiSelectController.value.isEmpty ||
+             multiSelectController.value.any((e) => items!.contains(e)),
+         'Controller value must match with one of the item in items list.',
+       ),
+       _searchType = _SearchType.onListData,
+       _dropdownType = _DropdownType.multipleSelect,
+       initialItem = null,
+       onChanged = null,
+       validator = null,
+       excludeSelected = false,
+       headerBuilder = null,
+       futureRequest = null,
+       futureRequestDelay = null,
+       searchRequestLoadingIndicator = null;
 
   const CustomDropdown.multiSelectSearchRequest({
     super.key,
@@ -468,6 +476,7 @@ class CustomDropdown<T> extends StatefulWidget {
     this.visibility,
     this.hintText,
     this.decoration,
+    this.dropdownPlacement = DropdownPlacement.auto,
     this.searchHintText,
     this.noResultFoundText,
     this.headerListBuilder,
@@ -488,17 +497,17 @@ class CustomDropdown<T> extends StatefulWidget {
     this.enabled = true,
     this.disabledDecoration,
     this.closeDropDownOnClearFilterSearch = false,
-  })  : assert(
-          initialItems == null || multiSelectController == null,
-          'Only one of initialItems or controller can be specified at a time',
-        ),
-        _searchType = _SearchType.onRequestData,
-        _dropdownType = _DropdownType.multipleSelect,
-        initialItem = null,
-        onChanged = null,
-        headerBuilder = null,
-        excludeSelected = false,
-        validator = null;
+  }) : assert(
+         initialItems == null || multiSelectController == null,
+         'Only one of initialItems or controller can be specified at a time',
+       ),
+       _searchType = _SearchType.onRequestData,
+       _dropdownType = _DropdownType.multipleSelect,
+       initialItem = null,
+       onChanged = null,
+       headerBuilder = null,
+       excludeSelected = false,
+       validator = null;
 
   @override
   State<CustomDropdown<T>> createState() => _CustomDropdownState<T>();
@@ -533,7 +542,8 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
     selectedItemNotifier =
         widget.controller ?? SingleSelectController(widget.initialItem);
 
-    selectedItemsNotifier = widget.multiSelectController ??
+    selectedItemsNotifier =
+        widget.multiSelectController ??
         MultiSelectController(widget.initialItems ?? []);
 
     selectedItemNotifier.addListener(_selectedItemListener);
@@ -673,6 +683,7 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                   searchRequestLoadingIndicator:
                       widget.searchRequestLoadingIndicator,
                   dropdownType: widget._dropdownType,
+                  dropdownPlacement: widget.dropdownPlacement,
                 );
               },
               child: (showCallback) {
@@ -684,13 +695,13 @@ class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
                     border: formFieldState.hasError
                         ? (decoration?.closedErrorBorder ?? _defaultErrorBorder)
                         : enabled
-                            ? decoration?.closedBorder
-                            : disabledDecoration?.border,
+                        ? decoration?.closedBorder
+                        : disabledDecoration?.border,
                     borderRadius: formFieldState.hasError
                         ? decoration?.closedErrorBorderRadius
                         : enabled
-                            ? decoration?.closedBorderRadius
-                            : disabledDecoration?.borderRadius,
+                        ? decoration?.closedBorderRadius
+                        : disabledDecoration?.borderRadius,
                     shadow: enabled
                         ? decoration?.closedShadow
                         : disabledDecoration?.shadow,

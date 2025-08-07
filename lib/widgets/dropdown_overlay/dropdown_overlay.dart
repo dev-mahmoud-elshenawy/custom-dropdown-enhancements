@@ -1,16 +1,18 @@
 part of '../../custom_dropdown.dart';
 
-const _defaultOverlayIconUp = Icon(
-  Icons.keyboard_arrow_up_rounded,
-  size: 20,
-);
+const _defaultOverlayIconUp = Icon(Icons.keyboard_arrow_up_rounded, size: 20);
 
 const _defaultHeaderPadding = EdgeInsets.all(16.0);
-const _overlayOuterPadding =
-    EdgeInsetsDirectional.only(bottom: 12, start: 12, end: 12);
+const _overlayOuterPadding = EdgeInsetsDirectional.only(
+  bottom: 12,
+  start: 12,
+  end: 12,
+);
 const _defaultOverlayShadowOffset = Offset(0, 6);
-const _defaultListItemPadding =
-    EdgeInsets.symmetric(vertical: 12, horizontal: 16);
+const _defaultListItemPadding = EdgeInsets.symmetric(
+  vertical: 12,
+  horizontal: 16,
+);
 
 class _DropdownOverlay<T> extends StatefulWidget {
   final List<T> items;
@@ -38,6 +40,7 @@ class _DropdownOverlay<T> extends StatefulWidget {
   final _NoResultFoundBuilder? noResultFoundBuilder;
   final CustomDropdownDecoration? decoration;
   final _DropdownType dropdownType;
+  final DropdownPlacement dropdownPlacement;
 
   const _DropdownOverlay({
     Key? key,
@@ -70,6 +73,7 @@ class _DropdownOverlay<T> extends StatefulWidget {
     required this.headerBuilder,
     required this.hintBuilder,
     required this.searchType,
+    required this.dropdownPlacement,
     required this.futureRequest,
     required this.futureRequestDelay,
     required this.listItemBuilder,
@@ -158,10 +162,7 @@ class _DropdownOverlayState<T> extends State<_DropdownOverlay<T>> {
       maxLines: widget.maxLines,
       overflow: TextOverflow.ellipsis,
       style: widget.headerStyle ??
-          const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
     );
   }
 
@@ -171,10 +172,7 @@ class _DropdownOverlayState<T> extends State<_DropdownOverlay<T>> {
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: widget.hintStyle ??
-          const TextStyle(
-            fontSize: 16,
-            color: Color(0xFFA7A7A7),
-          ),
+          const TextStyle(fontSize: 16, color: Color(0xFFA7A7A7)),
     );
   }
 
@@ -194,12 +192,15 @@ class _DropdownOverlayState<T> extends State<_DropdownOverlay<T>> {
   void initState() {
     super.initState();
     scrollController = widget.itemsScrollCtrl ?? ScrollController();
+    displayOverlayBottom = widget.dropdownPlacement == DropdownPlacement.auto ||
+        widget.dropdownPlacement == DropdownPlacement.bottom;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final render1 = key1.currentContext?.findRenderObject() as RenderBox;
       final render2 = key2.currentContext?.findRenderObject() as RenderBox;
       final screenHeight = MediaQuery.of(context).size.height;
       double y = render1.localToGlobal(Offset.zero).dy;
-      if (screenHeight - y < render2.size.height) {
+      if (screenHeight - y < render2.size.height &&
+          widget.dropdownPlacement == DropdownPlacement.auto) {
         displayOverlayBottom = false;
         setState(() {});
       }
@@ -528,7 +529,7 @@ class _DropdownOverlayState<T> extends State<_DropdownOverlay<T>> {
                                       ),
                                     )
                               else
-                                items.length > 4 ? Expanded(child: list) : list
+                                items.length > 4 ? Expanded(child: list) : list,
                             ],
                           ),
                         ),
@@ -542,7 +543,6 @@ class _DropdownOverlayState<T> extends State<_DropdownOverlay<T>> {
         ),
       ],
     );
-
 
     if (widget.canCloseOutsideBounds) {
       return Stack(
