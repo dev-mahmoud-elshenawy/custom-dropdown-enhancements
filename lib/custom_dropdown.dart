@@ -183,6 +183,8 @@ class CustomDropdown<T> extends StatefulWidget {
 
   final _DropdownType _dropdownType;
 
+  final VoidCallback? onSearchTap;
+
   CustomDropdown({
     super.key,
     required this.items,
@@ -226,6 +228,7 @@ class CustomDropdown<T> extends StatefulWidget {
          'Controller value must match with one of the item in items list.',
        ),
        _searchType = null,
+       onSearchTap = null,
        _dropdownType = _DropdownType.singleSelect,
        futureRequest = null,
        futureRequestDelay = null,
@@ -266,6 +269,7 @@ class CustomDropdown<T> extends StatefulWidget {
     this.expandedHeaderPadding,
     this.itemsListPadding,
     this.listItemPadding,
+    this.onSearchTap,
     this.excludeSelected = true,
     this.canCloseOutsideBounds = true,
     this.hideSelectedFieldWhenExpanded = false,
@@ -317,6 +321,7 @@ class CustomDropdown<T> extends StatefulWidget {
     this.hintBuilder,
     this.noResultFoundBuilder,
     this.validator,
+    this.onSearchTap,
     this.dropdownPlacement = DropdownPlacement.auto,
     this.validateOnChange = true,
     this.maxlines = 1,
@@ -389,6 +394,7 @@ class CustomDropdown<T> extends StatefulWidget {
          'Controller value must match with one of the item in items list.',
        ),
        _searchType = null,
+       onSearchTap = null,
        _dropdownType = _DropdownType.multipleSelect,
        initialItem = null,
        noResultFoundText = null,
@@ -423,6 +429,7 @@ class CustomDropdown<T> extends StatefulWidget {
     this.noResultFoundBuilder,
     this.hintText,
     this.searchHintText,
+    this.onSearchTap,
     this.validateOnChange = true,
     this.canCloseOutsideBounds = true,
     this.hideSelectedFieldWhenExpanded = false,
@@ -484,6 +491,7 @@ class CustomDropdown<T> extends StatefulWidget {
     this.hintBuilder,
     this.noResultFoundBuilder,
     this.listValidator,
+    this.onSearchTap,
     this.validateOnChange = true,
     this.maxlines = 1,
     this.overlayHeight,
